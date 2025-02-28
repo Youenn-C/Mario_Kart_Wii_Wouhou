@@ -1,9 +1,6 @@
-using System;
 using System.Collections;
 using Rewired;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 public class CartController : MonoBehaviour
 {
@@ -24,6 +21,9 @@ public class CartController : MonoBehaviour
     [SerializeField] private bool _goBack;
     [SerializeField] private bool _turnLeft;
     [SerializeField] private bool _turnRight;
+
+    [Header("Power Up"), Space(5)]
+    public ScriptableObject currentPowerUp; 
     
     [Header("Rewired"), Space(5)]
     [SerializeField] private Player _player;
@@ -117,11 +117,21 @@ public class CartController : MonoBehaviour
         if (_turnLeft)
         {
             transform.eulerAngles += Vector3.down * _rotationSpeed * Time.deltaTime;
+            
+            if (_goBack)
+            {
+                transform.eulerAngles += Vector3.up * _rotationSpeed * Time.deltaTime;
+            }
         }
         
         if (_turnRight)
         {
             transform.eulerAngles += Vector3.up * _rotationSpeed * Time.deltaTime;
+                
+            if (_goBack)
+            {
+                transform.eulerAngles += Vector3.down * _rotationSpeed * Time.deltaTime;
+            }   
         }
     }
 
