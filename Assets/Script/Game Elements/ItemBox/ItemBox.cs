@@ -9,7 +9,7 @@ public class ItemBox : MonoBehaviour
     [SerializeField] private MeshRenderer _meshRenderer;
     [SerializeField] private BoxCollider _boxCollider;
     [Space(5)]
-    [SerializeField] private ScriptableObject[] _powerUp;
+    [SerializeField] private GameObject[] _powerUp;
 
     void Start()
     {
@@ -26,7 +26,10 @@ public class ItemBox : MonoBehaviour
     void TriggerItemBox()
     {
         int randomPowerUp = Random.Range(0, _powerUp.Length);
-        CartController.Instance.currentPowerUp = _powerUp[randomPowerUp];
+        if (CartController.Instance.currentItemScript == null)
+        {
+            CartController.Instance.currentItemScript = _powerUp[randomPowerUp].GetComponent<Item>();
+        }
         StartCoroutine(ItemBoxRespwan());
     }
 

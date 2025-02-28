@@ -23,10 +23,10 @@ public class CartController : MonoBehaviour
     [SerializeField] private bool _turnRight;
 
     [Header("Power Up"), Space(5)]
-    public ScriptableObject currentPowerUp; 
+    public Item currentItemScript;
     
     [Header("Rewired"), Space(5)]
-    [SerializeField] private Player _player;
+    public Player _player;
     [SerializeField] private int _playerId;
 
     private void Awake()
@@ -50,6 +50,10 @@ public class CartController : MonoBehaviour
     {
         //ClampRotationX();
 
+        // *************************************************************************************************************
+        // INPUT MOVEMENT **********************************************************************************************
+        // *************************************************************************************************************
+        
         if (_player.GetButtonDown("GoFront"))
         {
             _goFront = true;
@@ -70,6 +74,10 @@ public class CartController : MonoBehaviour
             StartCoroutine(DecreaseSpeed());
         }
 
+        // *************************************************************************************************************
+        // INPUT ROTATION **********************************************************************************************
+        // *************************************************************************************************************
+        
         if (_player.GetButtonDown("TurnLeft"))
         {
             _turnLeft = true;
@@ -86,6 +94,15 @@ public class CartController : MonoBehaviour
         else if (_player.GetButtonUp("TurnRight"))
         {
             _turnRight = false;
+        }
+
+        // *************************************************************************************************************
+        // INPUT ITEM **************************************************************************************************
+        // *************************************************************************************************************
+
+        if (_player.GetButtonDown("UsePowerUp"))
+        {
+            currentItemScript.UseItem(currentItemScript._itemPowerUpTypeTarget);
         }
     }
 
@@ -147,9 +164,10 @@ public class CartController : MonoBehaviour
     {
         while (_currentSpeed > _neutralSpeed)
         {
+            yield return new WaitForSeconds(0.035f);
             _currentSpeed = Mathf.Max(_currentSpeed - _acceleration, _neutralSpeed);
             _cartRigidbody.MovePosition(transform.position + transform.forward * _currentSpeed * Time.deltaTime);
-            yield return new WaitForSeconds(0.05f);
+            
 
             if (_player.GetButton("GoFront"))
             {
@@ -170,16 +188,41 @@ public class CartController : MonoBehaviour
         }
     }
 
+    // *****************************************************************************************************************
+    // ACTIVE BOOST ITEMS **********************************************************************************************
+    // *****************************************************************************************************************
+    
     public void ActiveSpeedBoostByPad()
     {
         StartCoroutine(SpeedBoostByPad());
     }
-
+    
+    public void ActiveSpeedBoostByItem()
+    {
+        StartCoroutine(SpeedBoostByItem(currentItemScript.itemBoostAmount));
+    }
+    
     public IEnumerator SpeedBoostByPad()
     {
         _currentSpeed = _maxSpeed * 3;
 
-        _currentSpeed = Mathf.Max(_currentSpeed, _maxSpeed); // Applique le boost
+        _currentSpeed = Mathf.Max(_currentSpeed, _maxSpeed); 
+
+        //yield return new WaitForSeconds(0.75f); // Durée du boost
+
+        // Réduction progressive du boost pour un effet fluide
+        while (_currentSpeed > _maxSpeed)
+        {
+            _currentSpeed -= _acceleration; 
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+    
+    public IEnumerator SpeedBoostByItem(int amount)
+    {
+        _currentSpeed = _maxSpeed * amount;
+
+        _currentSpeed = Mathf.Max(_currentSpeed, _maxSpeed); 
 
         //yield return new WaitForSeconds(0.75f); // Durée du boost
 

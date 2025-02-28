@@ -14,6 +14,8 @@ public class PowerUp : ScriptableObject
     [Header("Boost"), Space(5)]
     public int powerUpDurability;
     public int powerUpBoostAmount;
+    public bool infiniteDurability;
+    public float timeDurability;
     
     [Header("Projectile"), Space(5)]
     public int projectileAmount;
