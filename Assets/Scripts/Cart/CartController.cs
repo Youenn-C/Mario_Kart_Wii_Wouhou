@@ -99,11 +99,13 @@ public class CartController : MonoBehaviour
         // *************************************************************************************************************
         // INPUT ITEM **************************************************************************************************
         // *************************************************************************************************************
-
+        
+        /*
         if (_player.GetButtonDown("UsePowerUp"))
         {
             currentItemScript.UseItem(currentItemScript._itemPowerUpTypeTarget);
         }
+        */
     }
 
     private void FixedUpdate()
@@ -196,12 +198,12 @@ public class CartController : MonoBehaviour
     {
         StartCoroutine(SpeedBoostByPad());
     }
-    
+    /*
     public void ActiveSpeedBoostByItem()
     {
         StartCoroutine(SpeedBoostByItem(currentItemScript.itemBoostAmount));
     }
-    
+    */
     public IEnumerator SpeedBoostByPad()
     {
         _currentSpeed = _maxSpeed * 3;
