@@ -1,42 +1,35 @@
-using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class ItemBox : MonoBehaviour
 {
-    [Header("References"), Space(5)] 
-    [SerializeField] private MeshRenderer _meshRenderer;
-    [SerializeField] private BoxCollider _boxCollider;
-    [Space(5)]
-    [SerializeField] private GameObject[] _powerUp;
 
-    void Start()
-    {
-        
-    }
-
+    [SerializeField]
+    private MeshRenderer _meshRenderer, _text;
+    [SerializeField]
+    private Collider _collider;
+    [SerializeField]
+    private float _waitBeforeRespawn = 1;
     private void OnTriggerEnter(Collider other)
     {
-        _meshRenderer.enabled = false;
-        _boxCollider.enabled = false;
-        TriggerItemBox();
-    }
-
-    void TriggerItemBox()
-    {
-        int randomPowerUp = Random.Range(0, _powerUp.Length);
-        if (CartController.Instance.currentItemScript == null)
+        PlayerItemManager playerItemManagerInContact = other.GetComponent<PlayerItemManager>();
+        if(playerItemManagerInContact != null)
         {
-            CartController.Instance.currentItemScript = _powerUp[randomPowerUp].GetComponent<Item>();
+            playerItemManagerInContact.GenerateItem();
+            StartCoroutine(Respawn());
         }
-        StartCoroutine(ItemBoxRespwan());
     }
 
-    public IEnumerator ItemBoxRespwan()
+    private IEnumerator Respawn()
     {
-        yield return new WaitForSeconds(3f);
+        _collider.enabled = false;
+        _text.enabled = false;
+        _meshRenderer.enabled = false;
+        yield return new WaitForSeconds(_waitBeforeRespawn);
+        _collider.enabled = true;
+        _text.enabled = true;
         _meshRenderer.enabled = true;
-        _boxCollider.enabled = true;
+
     }
 }

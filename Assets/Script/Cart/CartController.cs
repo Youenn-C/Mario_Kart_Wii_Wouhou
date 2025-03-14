@@ -1,5 +1,6 @@
 using System.Collections;
 using Rewired;
+using Unity.Collections;
 using UnityEngine;
 
 public class CartController : MonoBehaviour
@@ -10,20 +11,27 @@ public class CartController : MonoBehaviour
     [SerializeField] private Rigidbody _cartRigidbody;
 
     [Header("Variables"), Space(5)]
-    [SerializeField] private int _currentSpeed;
-    [SerializeField] private int _maxSpeed;
-    [SerializeField] private int _neutralSpeed;
-    [SerializeField] private int _minSpeed;
-    [SerializeField] private int _acceleration;
-    [SerializeField] private int _rotationSpeed;
+    [SerializeField] private float _currentSpeed;
+    [SerializeField] private float _maxSpeed;
+    [SerializeField] private float _neutralSpeed;
+    [SerializeField] private float _minSpeed;
+    [SerializeField] private float _acceleration;
+    [SerializeField] private float _rotationSpeed;
+    //private float _accelerationLerpInterpolator;
+    //private float _terrainSpeedVariator;
     [Space(5)]
     [SerializeField] private bool _goFront;
     [SerializeField] private bool _goBack;
     [SerializeField] private bool _turnLeft;
     [SerializeField] private bool _turnRight;
-
+    [SerializeField] private bool _isTurbo;
+    //[SerializeField] private bool _isAccelerating;
+    [Space(5)]
+    [SerializeField] private AnimationCurve _accelerationCurve;
+    [SerializeField] private AnimationCurve _decelerationCurve;
+    
     [Header("Power Up"), Space(5)]
-    public Item currentItemScript;
+    [SerializeField] private int _maxSpeedTurbo;
     
     [Header("Rewired"), Space(5)]
     public Player _player;
@@ -48,8 +56,6 @@ public class CartController : MonoBehaviour
     
     private void Update()
     {
-        //ClampRotationX();
-
         // *************************************************************************************************************
         // INPUT MOVEMENT **********************************************************************************************
         // *************************************************************************************************************
@@ -57,21 +63,25 @@ public class CartController : MonoBehaviour
         if (_player.GetButtonDown("GoFront"))
         {
             _goFront = true;
+            //_isAccelerating = true;
         }
         else if (_player.GetButtonUp("GoFront"))
         {
             _goFront = false;
-            StartCoroutine(DecreaseSpeed());
+            //_isAccelerating = false;
+            //StartCoroutine(DecreaseSpeed());
         }
         
         if (_player.GetButtonDown("GoBack"))
         {
             _goBack = true;
+            //_isAccelerating = true;
         }
         else if (_player.GetButtonUp("GoBack"))
         {
             _goBack = false;
-            StartCoroutine(DecreaseSpeed());
+            //_isAccelerating = false;
+            //StartCoroutine(DecreaseSpeed());
         }
 
         // *************************************************************************************************************
@@ -94,15 +104,6 @@ public class CartController : MonoBehaviour
         else if (_player.GetButtonUp("TurnRight"))
         {
             _turnRight = false;
-        }
-
-        // *************************************************************************************************************
-        // INPUT ITEM **************************************************************************************************
-        // *************************************************************************************************************
-
-        if (_player.GetButtonDown("UsePowerUp"))
-        {
-            currentItemScript.UseItem(currentItemScript._itemPowerUpTypeTarget);
         }
     }
 
@@ -150,22 +151,23 @@ public class CartController : MonoBehaviour
                 transform.eulerAngles += Vector3.down * _rotationSpeed * Time.deltaTime;
             }   
         }
+        
+        // *************************************************************************************************************
+        // TURBO *******************************************************************************************************
+        // *************************************************************************************************************
+    
+        if(_isTurbo)
+        {
+            _currentSpeed = _maxSpeedTurbo;
+        }
     }
-
-    private void ClampRotationX()
-    {
-        var xAngle = Mathf.Clamp(transform.eulerAngles.x, -60, 60);
-        var yAngle = transform.eulerAngles.y;
-        var zAngle = transform.eulerAngles.z;
-        transform.eulerAngles = new Vector3(xAngle, yAngle, zAngle);
-    }
-
+    
     private IEnumerator DecreaseSpeed()
     {
         while (_currentSpeed > _neutralSpeed)
         {
             yield return new WaitForSeconds(0.035f);
-            _currentSpeed = Mathf.Max(_currentSpeed - _acceleration, _neutralSpeed);
+            _currentSpeed -= _acceleration;
             _cartRigidbody.MovePosition(transform.position + transform.forward * _currentSpeed * Time.deltaTime);
             
 
@@ -177,7 +179,7 @@ public class CartController : MonoBehaviour
 
         while (_currentSpeed < _neutralSpeed)
         {
-            _currentSpeed = Mathf.Min(_currentSpeed + _acceleration, _neutralSpeed);
+            _currentSpeed += _acceleration;
             _cartRigidbody.MovePosition(transform.position + transform.forward * _currentSpeed * Time.deltaTime);
             yield return new WaitForSeconds(0.05f);
 
@@ -197,18 +199,11 @@ public class CartController : MonoBehaviour
         StartCoroutine(SpeedBoostByPad());
     }
     
-    public void ActiveSpeedBoostByItem()
-    {
-        StartCoroutine(SpeedBoostByItem(currentItemScript.itemBoostAmount));
-    }
-    
     public IEnumerator SpeedBoostByPad()
     {
         _currentSpeed = _maxSpeed * 3;
 
-        _currentSpeed = Mathf.Max(_currentSpeed, _maxSpeed); 
-
-        //yield return new WaitForSeconds(0.75f); // Durée du boost
+        _currentSpeed = Mathf.Max(_currentSpeed, _maxSpeed);
 
         // Réduction progressive du boost pour un effet fluide
         while (_currentSpeed > _maxSpeed)
@@ -218,15 +213,22 @@ public class CartController : MonoBehaviour
         }
     }
     
-    public IEnumerator SpeedBoostByItem(int amount)
+    public void Turbo()
     {
-        _currentSpeed = _maxSpeed * amount;
+        if (!_isTurbo)
+        {
+            StartCoroutine(Turboroutine());
+        }
+    }
 
-        _currentSpeed = Mathf.Max(_currentSpeed, _maxSpeed); 
-
-        //yield return new WaitForSeconds(0.75f); // Durée du boost
-
-        // Réduction progressive du boost pour un effet fluide
+    private IEnumerator Turboroutine()
+    {
+        _isTurbo = true;
+        
+        yield return new WaitForSeconds(3);
+        
+        _isTurbo = false;
+        
         while (_currentSpeed > _maxSpeed)
         {
             _currentSpeed -= _acceleration; 
