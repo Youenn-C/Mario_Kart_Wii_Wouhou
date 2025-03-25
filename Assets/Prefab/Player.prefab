@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4379526790429809556}
   - component: {fileID: 2131702672666958430}
   m_Layer: 0
-  m_Name: CinemachineCamera
+  m_Name: CinemachineCamera P1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -355,7 +355,7 @@ GameObject:
   - component: {fileID: 1125207453589206666}
   - component: {fileID: 5627155399915997675}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: Main Camera P1
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -528,7 +528,7 @@ GameObject:
   - component: {fileID: 3991036462183942689}
   - component: {fileID: 7320097224090073563}
   m_Layer: 0
-  m_Name: Cart
+  m_Name: Cart P1
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

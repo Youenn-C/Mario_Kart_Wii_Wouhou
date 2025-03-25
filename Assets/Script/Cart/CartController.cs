@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class CartController : MonoBehaviour
 {
-    public static CartController Instance;
-    
     [Header("References"), Space(5)]
     [SerializeField] private Rigidbody _cartRigidbody;
 
@@ -37,18 +35,6 @@ public class CartController : MonoBehaviour
     public Player _player;
     [SerializeField] private int _playerId;
 
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
     void Start()
     {
         _player = ReInput.players.GetPlayer(_playerId);
@@ -56,6 +42,11 @@ public class CartController : MonoBehaviour
     
     private void Update()
     {
+        if (transform.eulerAngles.z != 0)
+        {
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 0);
+        }
+        
         // *************************************************************************************************************
         // INPUT MOVEMENT **********************************************************************************************
         // *************************************************************************************************************
@@ -69,7 +60,7 @@ public class CartController : MonoBehaviour
         {
             _goFront = false;
             //_isAccelerating = false;
-            //StartCoroutine(DecreaseSpeed());
+            StartCoroutine(DecreaseSpeed());
         }
         
         if (_player.GetButtonDown("GoBack"))
@@ -81,7 +72,7 @@ public class CartController : MonoBehaviour
         {
             _goBack = false;
             //_isAccelerating = false;
-            //StartCoroutine(DecreaseSpeed());
+            StartCoroutine(DecreaseSpeed());
         }
 
         // *************************************************************************************************************
