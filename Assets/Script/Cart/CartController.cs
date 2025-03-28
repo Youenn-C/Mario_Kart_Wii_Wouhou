@@ -30,10 +30,11 @@ public class CartController : MonoBehaviour
     
     [Header("Power Up"), Space(5)]
     [SerializeField] private int _maxSpeedTurbo;
+    public Transform frontPosition;
     
     [Header("Rewired"), Space(5)]
-    public Player _player;
     [SerializeField] private int _playerId;
+    public Player _player;
 
     void Start()
     {

@@ -7,7 +7,11 @@ public class ItemLaunchable : Item
 
     public override void Activation(PlayerItemManager player)
     {
-        Instantiate(objectToLaunch, player.transform.position, player.transform.rotation);
+        GameObject launched = Instantiate(objectToLaunch, player.cartController.frontPosition.position, player.transform.rotation);
+        
+        Rigidbody rbObjectToLaunch = launched.GetComponent<Rigidbody>();
+        
+        Vector3 direction = player.cartController.frontPosition.position - player.cartController.transform.position;
+        rbObjectToLaunch.AddForce(direction.normalized * 1000);
     }
-
 }
