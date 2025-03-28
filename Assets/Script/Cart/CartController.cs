@@ -1,6 +1,7 @@
 using System.Collections;
 using Rewired;
 using Unity.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CartController : MonoBehaviour
@@ -15,22 +16,21 @@ public class CartController : MonoBehaviour
     [SerializeField] private float _minSpeed;
     [SerializeField] private float _acceleration;
     [SerializeField] private float _rotationSpeed;
-    //private float _accelerationLerpInterpolator;
-    //private float _terrainSpeedVariator;
     [Space(5)]
     [SerializeField] private bool _goFront;
     [SerializeField] private bool _goBack;
     [SerializeField] private bool _turnLeft;
     [SerializeField] private bool _turnRight;
     [SerializeField] private bool _isTurbo;
-    //[SerializeField] private bool _isAccelerating;
     [Space(5)]
     [SerializeField] private AnimationCurve _accelerationCurve;
     [SerializeField] private AnimationCurve _decelerationCurve;
     
     [Header("Power Up"), Space(5)]
     [SerializeField] private int _maxSpeedTurbo;
+    [Space(5)]
     public Transform frontPosition;
+    public Transform backPosition;
     
     [Header("Rewired"), Space(5)]
     [SerializeField] private int _playerId;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ItemLaunchable", menuName = "Scriptable Objects/ItemLaunchable")]
+[CreateAssetMenu(fileName = "ItemLaunchable", menuName = "Create New Item/ItemLaunchable")]
 public class ItemLaunchable : Item
 {
     public GameObject objectToLaunch;

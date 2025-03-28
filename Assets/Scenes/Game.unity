@@ -335,6 +335,26 @@ PrefabInstance:
       propertyPath: _itemImage
       value: 
       objectReference: {fileID: 1475344158}
+    - target: {fileID: 7320097224090073563, guid: fc12b2319e1d2cd44abe9b69463d9ba8, type: 3}
+      propertyPath: _itemList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7320097224090073563, guid: fc12b2319e1d2cd44abe9b69463d9ba8, type: 3}
+      propertyPath: '_itemList.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: bcec8b81460eb83468d9ad6739538c48, type: 2}
+    - target: {fileID: 7320097224090073563, guid: fc12b2319e1d2cd44abe9b69463d9ba8, type: 3}
+      propertyPath: '_itemList.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: e480412ac2b81b942bbd1c98e17957cd, type: 2}
+    - target: {fileID: 7320097224090073563, guid: fc12b2319e1d2cd44abe9b69463d9ba8, type: 3}
+      propertyPath: '_itemList.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 816a41838f1281b4d92468d7a832f33b, type: 2}
+    - target: {fileID: 7320097224090073563, guid: fc12b2319e1d2cd44abe9b69463d9ba8, type: 3}
+      propertyPath: '_itemList.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: bcec8b81460eb83468d9ad6739538c48, type: 2}
     - target: {fileID: 7357579144067142764, guid: fc12b2319e1d2cd44abe9b69463d9ba8, type: 3}
       propertyPath: m_Name
       value: Main Camera P2
@@ -8852,6 +8872,26 @@ PrefabInstance:
       propertyPath: _itemImage
       value: 
       objectReference: {fileID: 1659113020}
+    - target: {fileID: 7320097224090073563, guid: fc12b2319e1d2cd44abe9b69463d9ba8, type: 3}
+      propertyPath: _itemList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7320097224090073563, guid: fc12b2319e1d2cd44abe9b69463d9ba8, type: 3}
+      propertyPath: '_itemList.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: bcec8b81460eb83468d9ad6739538c48, type: 2}
+    - target: {fileID: 7320097224090073563, guid: fc12b2319e1d2cd44abe9b69463d9ba8, type: 3}
+      propertyPath: '_itemList.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: e480412ac2b81b942bbd1c98e17957cd, type: 2}
+    - target: {fileID: 7320097224090073563, guid: fc12b2319e1d2cd44abe9b69463d9ba8, type: 3}
+      propertyPath: '_itemList.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 816a41838f1281b4d92468d7a832f33b, type: 2}
+    - target: {fileID: 7320097224090073563, guid: fc12b2319e1d2cd44abe9b69463d9ba8, type: 3}
+      propertyPath: '_itemList.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: bcec8b81460eb83468d9ad6739538c48, type: 2}
     - target: {fileID: 7581760669661472982, guid: fc12b2319e1d2cd44abe9b69463d9ba8, type: 3}
       propertyPath: m_TargetDisplay
       value: 0
