@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int lapNumberP1;
     [SerializeField] private int checkpointTriggeredP1;
     
-    [Header("°Player 1"), Space(5)]
+    [Header("°Player 2"), Space(5)]
     [SerializeField] private int lapNumberP2;
     [SerializeField] private int checkpointTriggeredP2;
     
@@ -22,10 +22,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _titleScreen;
     [SerializeField] private GameObject _mainMenu;
     [SerializeField] private GameObject _settingsWindow;
+    [Space(5)]
+    [SerializeField] private GameObject _selectorPlayer1;
+    [SerializeField] private GameObject _selectorPlayer2;
+    [SerializeField] private GameObject _selectorUI;
+    [SerializeField] private GameObject _tempCamera;
     
-    
+    [Space(5)]
     public string positionPlayer1;
     public string positionPlayer2;
+    
     public void StartGame()
     {
         DontDestroyOnLoad(gameObject);
@@ -46,6 +52,15 @@ public class GameManager : MonoBehaviour
     public void ToggleSettingsWindow()
     {
         _settingsWindow.SetActive(!_settingsWindow.activeSelf);
+    }
+
+    public void SelectAvatars()
+    {
+        _mainMenu.SetActive(false);
+        _selectorPlayer1.SetActive(true);
+        _selectorPlayer2.SetActive(true);
+        _selectorUI.SetActive(true);
+        _tempCamera.SetActive(false);
     }
 
     void Update()
