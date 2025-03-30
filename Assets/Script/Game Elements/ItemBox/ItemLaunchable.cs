@@ -12,6 +12,6 @@ public class ItemLaunchable : Item
         Rigidbody rbObjectToLaunch = launched.GetComponent<Rigidbody>();
         
         Vector3 direction = player.cartController.frontPosition.position - player.cartController.transform.position;
-        rbObjectToLaunch.AddForce(direction.normalized * 1000);
+        rbObjectToLaunch.AddForce(direction.normalized * 5000);
     }
 }

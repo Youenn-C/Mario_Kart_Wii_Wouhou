@@ -8,7 +8,12 @@ public class CartController : MonoBehaviour
 {
     [Header("References"), Space(5)]
     [SerializeField] private Rigidbody _cartRigidbody;
-
+    [Space(5)]
+    [SerializeField] private GameObject avatar1;
+    [SerializeField] private GameObject avatar2;
+    [SerializeField] private GameObject avatar3;
+    public LapManager lapManager;
+    
     [Header("Variables"), Space(5)]
     [SerializeField] private float _currentSpeed;
     [SerializeField] private float _maxSpeed;
@@ -39,6 +44,54 @@ public class CartController : MonoBehaviour
     void Start()
     {
         _player = ReInput.players.GetPlayer(_playerId);
+        
+        if (_playerId == 0)
+        {
+            GameManager.Instance.player1 = this;
+            
+            if (SelectAvatarManager.Instance.avatarPlayer1 == "Octane")
+            {
+                avatar1.SetActive(true);
+                avatar2.SetActive(false);
+                avatar3.SetActive(false);
+            }
+            else if (SelectAvatarManager.Instance.avatarPlayer1 == "Fennec")
+            {
+                avatar1.SetActive(false);
+                avatar2.SetActive(true);
+                avatar3.SetActive(false);
+            }
+            else if (SelectAvatarManager.Instance.avatarPlayer1 == "Dominus")
+            {
+                avatar1.SetActive(false);
+                avatar2.SetActive(false);
+                avatar3.SetActive(true);
+            }
+        }
+        
+        if (_playerId == 1)
+        {
+            GameManager.Instance.player2 = this;
+            
+            if (SelectAvatarManager.Instance.avatarPlayer2 == "Octane")
+            {
+                avatar1.SetActive(true);
+                avatar2.SetActive(false);
+                avatar3.SetActive(false);
+            }
+            else if (SelectAvatarManager.Instance.avatarPlayer2 == "Fennec")
+            {
+                avatar1.SetActive(false);
+                avatar2.SetActive(true);
+                avatar3.SetActive(false);
+            }
+            else if (SelectAvatarManager.Instance.avatarPlayer2 == "Dominus")
+            {
+                avatar1.SetActive(false);
+                avatar2.SetActive(false);
+                avatar3.SetActive(true);
+            }
+        }
     }
     
     private void Update()
@@ -193,7 +246,7 @@ public class CartController : MonoBehaviour
     
     public IEnumerator SpeedBoostByPad()
     {
-        _currentSpeed = _maxSpeed * 3;
+        _currentSpeed = _maxSpeed * 1.5f;
 
         _currentSpeed = Mathf.Max(_currentSpeed, _maxSpeed);
 

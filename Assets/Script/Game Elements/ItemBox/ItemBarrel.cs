@@ -4,6 +4,7 @@ using UnityEngine;
 public class ItemBarrel : Item
 {
     public GameObject objectToSpawn;
+    
     public override void Activation(PlayerItemManager player)
     {
         GameObject spawned = Instantiate(objectToSpawn, player.cartController.frontPosition.position, player.transform.rotation);

@@ -1,10 +1,12 @@
 using UnityEngine;
 
-public class RayCastDetecting : MonoBehaviour
+public class RaycastDetecting : MonoBehaviour
 {
-    [SerializeField] private LayerMask layerMask;
-    [SerializeField] private float rayCastDistance;
-    
+    [SerializeField]
+    private float _raycastDistance;
+
+    [SerializeField]
+    private LayerMask _layerMask;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -14,11 +16,11 @@ public class RayCastDetecting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKey(KeyCode.I))
         {
-            if (Physics.Raycast(transform.position, transform.forward, rayCastDistance));
+            if(Physics.Raycast(transform.position, transform.forward, out var info, _raycastDistance, _layerMask))
             {
-                Debug.Log("Ray Cast");
+                print("Coucou");
             }
         }
     }
